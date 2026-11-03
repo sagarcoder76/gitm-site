@@ -105,8 +105,6 @@
   .hero-content h1, .page-hero h1 { animation: headline-reveal 1.05s cubic-bezier(.16,1,.3,1) .08s both; }
   .hero-content > p, .page-hero p { animation: editorial-rise .8s cubic-bezier(.22,1,.36,1) .28s both; }
   .hero-actions { animation: editorial-rise .8s cubic-bezier(.22,1,.36,1) .42s both; }
-  .hero-shade::after { content: ''; position: absolute; width: 380px; height: 380px; right: 6%; top: 12%; border: 1px solid rgba(244,225,177,.18); border-radius: 50%; box-shadow: 0 0 0 55px rgba(244,225,177,.025), 0 0 0 110px rgba(244,225,177,.02); pointer-events: none; animation: halo-arrive 1.8s cubic-bezier(.16,1,.3,1) both; }
-  .page-hero::before { content: ''; position: absolute; right: -60px; top: -210px; width: 540px; height: 540px; border: 1px solid rgba(216,177,104,.18); border-radius: 50%; box-shadow: 0 0 0 70px rgba(216,177,104,.035), 0 0 0 140px rgba(216,177,104,.025); pointer-events: none; animation: halo-arrive 1.6s cubic-bezier(.16,1,.3,1) both; }
   .page-hero .crumb, .page-hero .eyebrow, .page-hero h1, .page-hero p { position: relative; z-index: 1; }
   .section-heading h2 em, .page-section h2 em, .intro h2 em, .campus h2 em { background: linear-gradient(100deg, #a97d39 0%, #d1ad6d 45%, #a97d39 85%); background-size: 200% auto; background-clip: text; -webkit-background-clip: text; color: transparent; animation: ink-shift 8s ease-in-out infinite alternate; }
   .btn, .nav-apply { position: relative; isolation: isolate; overflow: hidden; }
@@ -122,10 +120,6 @@
   @media (min-width: 901px) {
     .hero-bg { inset: -45px 0; translate: 0 var(--hero-shift, 0px); will-change: translate; }
   }
-  @media (max-width: 600px) {
-    .hero-shade::after { width: 220px; height: 220px; right: -90px; top: 18%; }
-    .page-hero::before { width: 330px; height: 330px; right: -210px; top: -90px; }
-  }
 }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .card, .course-card, .mini-card, .contact-card, .eligibility-list > div { position: relative; isolation: isolate; }
@@ -134,7 +128,6 @@
 }
 @keyframes headline-reveal { from { opacity: 0; transform: translateY(36px); clip-path: inset(0 0 100% 0); } to { opacity: 1; transform: translateY(0); clip-path: inset(0 0 0 0); } }
 @keyframes editorial-rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes halo-arrive { from { opacity: 0; transform: scale(.65); } to { opacity: 1; transform: scale(1); } }
 @keyframes ink-shift { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
 
 /* Campus photo slideshow: uses the existing college photos, never stock imagery. */
