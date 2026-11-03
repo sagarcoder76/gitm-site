@@ -17,7 +17,7 @@ The design uses photographs identified as GITM campus, student and event photogr
 - `students-campus.jpg`, `workshop.png`, `student-event.png`, `students-on-campus.png`: [Collegedunia GITM gallery](https://collegedunia.com/college/17693-global-institute-of-technology-and-management-gitm-gurgaon/gallery)
 - `campus-building.webp`, `learning.webp`: [CollegeBatch GITM campus tour](https://www.collegebatch.com/4241-global-institute-of-technology-and-management-campus-tour-gurgaon)
 
-The institute logo is loaded from the existing GITM website. The site owner should confirm image ownership and permissions, provide original high-resolution assets, and review the published academic, admissions and placement information before launching. This is not connected to the existing WordPress CMS, student information system or a contact-form backend.
+The locally hosted `assets/gitm-emblem.png` is an upscaled and lightly sharpened version of a GITM emblem sourced from [Jagran Josh](https://www.jagranjosh.com/colleges/global-institute-of-technology-and-management-gitm-gurgaon-1310). It is not a native-resolution original; the institute should provide and approve its original high-resolution logo. The site owner should confirm image ownership and permissions, provide original high-resolution assets, and review the published academic, admissions and placement information before launching. This is not connected to the existing WordPress CMS, student information system or a contact-form backend.
 
 ## Photo galleries and recruiters
 

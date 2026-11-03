@@ -269,8 +269,7 @@ document.addEventListener('keydown', event => {
   }
 });
 
-// The official logo contains the full wordmark. If its remote source is
-// unavailable, keep a readable text alternative in the header instead.
+// Keep the institution name visible if the locally hosted emblem cannot load.
 const instituteLogo = document.querySelector('.brand-logo');
 const logoFallback = document.querySelector('.brand-copy');
 if (instituteLogo && logoFallback) {
