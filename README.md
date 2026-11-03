@@ -18,3 +18,9 @@ The design uses photographs identified as GITM campus, student and event photogr
 - `campus-building.webp`, `learning.webp`: [CollegeBatch GITM campus tour](https://www.collegebatch.com/4241-global-institute-of-technology-and-management-campus-tour-gurgaon)
 
 The institute logo is loaded from the existing GITM website. The site owner should confirm image ownership and permissions, provide original high-resolution assets, and review the published academic, admissions and placement information before launching. This is not connected to the existing WordPress CMS, student information system or a contact-form backend.
+
+## Photo galleries and recruiters
+
+Additional gallery images are embedded directly from the existing GITM site (not copied into this repository): the [campus](https://gitmgurgaon.com/lush-green-campus/), [about](https://gitmgurgaon.com/about-gitm/), [central library](https://gitmgurgaon.com/central-library/), [hostel](https://gitmgurgaon.com/hostel-facilities/) and [clubs](https://gitmgurgaon.com/clubs-and-societies/) pages. Exact image URLs are in `officialGallerySources` in `extra-pages.js`. Images depend on the source server remaining reachable; failed images are hidden. These are selected images, not an exhaustive collection. Confirm ownership and permission before official use, and prefer locally hosted, approved originals for reliability.
+
+The recruiter wall is based on names in GITM's [leading recruiters](https://gitmgurgaon.com/our-leading-recruiters/) and [placement cell](https://gitmgurgaon.com/placement-cell/) material. Names are institute-reported and do not establish current participation, visit dates, or guaranteed placement. Confirm with the placement office before official publication.
