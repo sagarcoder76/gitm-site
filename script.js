@@ -60,23 +60,6 @@ if (page && location.hash && page !== 'academics') {
   requestAnimationFrame(() => document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView());
 }
 
-// Reveal content only when motion is allowed, keeping the page usable without JS.
-if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  const observer = new IntersectionObserver((entries, instance) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        instance.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
-  document.querySelectorAll('.intro-copy, .intro-aside, .stat, .stat-end, .section-heading, .future-left, .future-right, .campus > div, .admissions > div, .story-grid > a, .page-section > .eyebrow, .page-section > h2, .split > div, .split > img, .mini-card, .step, .eligibility-list > div, .contact-card, .photo-grid > img, .faq details').forEach((element, index) => {
-    element.classList.add('reveal');
-    element.style.setProperty('--reveal-delay', `${Math.min(index % 3, 2) * 65}ms`);
-    observer.observe(element);
-  });
-}
-
 // Update a decorative progress line without interfering with page interaction.
 const progressBar = document.querySelector('.reading-progress span');
 let progressPending = false;
@@ -116,4 +99,63 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
     });
   }, { threshold: 0.5 });
   statsToAnimate.forEach(element => counterObserver.observe(element));
+}
+
+// Animate elements as they enter view without hiding content if JS or animation
+// support is unavailable. Each element is animated just once per page load.
+const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+const animatedElements = new WeakSet();
+const activeAnimations = new Set();
+const motionSelectors = [
+  '.intro-copy', '.intro-aside', '.stat', '.stat-end',
+  '.section-heading', '.future-left', '.future-right', '.campus > div',
+  '.admissions > div', '.story-grid > a', '.page-section > .eyebrow',
+  '.page-section > h2', '.page-section > p', '.split > div', '.split > img',
+  '.mini-card', '.step', '.eligibility-list > div', '.contact-card',
+  '.photo-grid > img', '.faq details', '.recruiters > span', '.quick-links > a',
+  '.course-card', '.cards > .card', '.notice', '.footer-main > div'
+].join(',');
+let motionObserver;
+function animateOnEntry(element) {
+  if (motionPreference.matches || typeof element.animate !== 'function') return;
+  const isPhoto = element.matches('.split > img, .photo-grid > img');
+  const siblings = Array.from(element.parentElement.children);
+  const delay = Math.min(siblings.indexOf(element) % 4, 3) * 75;
+  const frames = isPhoto
+    ? [{ opacity: 0.35, clipPath: 'inset(0 0 12% 0)', transform: 'translateY(14px)' }, { opacity: 1, clipPath: 'inset(0 0 0 0)', transform: 'translateY(0)' }]
+    : [{ opacity: 0.15, transform: 'translateY(24px)' }, { opacity: 1, transform: 'translateY(0)' }];
+  const animation = element.animate(frames, { duration: isPhoto ? 900 : 700, delay, easing: 'cubic-bezier(.22, 1, .36, 1)' });
+  activeAnimations.add(animation);
+  animation.onfinish = animation.oncancel = () => activeAnimations.delete(animation);
+}
+function observeMotionElements(root = document) {
+  if (!motionObserver || motionPreference.matches) return;
+  const elements = root.querySelectorAll(motionSelectors);
+  elements.forEach(element => {
+    if (animatedElements.has(element)) return;
+    animatedElements.add(element);
+    motionObserver.observe(element);
+  });
+}
+if ('IntersectionObserver' in window && !motionPreference.matches) {
+  motionObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      animateOnEntry(entry.target);
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
+  observeMotionElements();
+  // Programme filters replace their cards. Observe the new cards as well.
+  document.querySelectorAll('#cards, #course-grid').forEach(container => {
+    new MutationObserver(() => observeMotionElements(container)).observe(container, { childList: true });
+  });
+}
+if (typeof motionPreference.addEventListener === 'function') {
+  motionPreference.addEventListener('change', event => {
+    if (event.matches) {
+      activeAnimations.forEach(animation => animation.cancel());
+      if (motionObserver) motionObserver.disconnect();
+    }
+  });
 }

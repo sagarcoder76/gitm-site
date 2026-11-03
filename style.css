@@ -63,3 +63,37 @@
 @keyframes scroll-hint { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 @keyframes gentle-turn { to { transform: rotate(360deg); } }
 @keyframes menu-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Expressive, lightweight motion across all pages. The real campus images stay intact. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Scroll-triggered movement is managed in JS so content is never left hidden. */
+  .course-grid .course-card, .cards .card { animation: none; }
+  .hero-content h1 em, .page-hero h1 em { display: inline-block; animation: title-glow 2.5s ease-out both; }
+  .page-hero::after { transform-origin: center; animation: hero-emblem 24s linear infinite; pointer-events: none; }
+  .eyebrow > span { transform-origin: left; animation: draw-line 1s cubic-bezier(.22,1,.36,1) both; }
+  .hero-note { animation: note-enter .85s .35s cubic-bezier(.22,1,.36,1) both; }
+  .hero-side .side-line { transform-origin: top; animation: draw-vertical 1s .45s ease-out both; }
+  .stat { transition: background .3s ease, transform .3s ease; }
+  .stat:hover { transform: translateY(-4px); }
+  .recruiters span, .eligibility-list div { transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+  .recruiters span:hover, .eligibility-list div:hover { transform: translateY(-3px); border-color: #c0a06b; box-shadow: 0 10px 24px rgba(20,44,40,.06); }
+  .course-tools button { transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease; }
+  .course-tools button:hover { transform: translateY(-2px); border-color: #a98d59; }
+  .faq details[open] p { animation: detail-enter .35s ease-out both; }
+  .faq summary::after { transition: transform .25s ease, color .25s ease; }
+  .faq details[open] summary::after { transform: rotate(180deg); }
+  .photo-grid img, .split > img { transition: filter .4s ease; }
+  .photo-grid img:hover, .split > img:hover { filter: saturate(1.12) brightness(1.03); }
+  .admissions .btn-gold { position: relative; overflow: hidden; }
+  .admissions .btn-gold::before { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 25%, rgba(255,255,255,.32) 50%, transparent 75%); transform: translateX(-150%); }
+  .admissions .btn-gold:hover::before { animation: button-sheen .8s ease; }
+  .footer-brand span { display: inline-block; transition: transform .5s ease; }
+  .footer-brand:hover span { transform: rotate(90deg); }
+}
+@keyframes title-glow { from { color: #f2d7a0; } to { color: #d6ae65; } }
+@keyframes hero-emblem { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@keyframes draw-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes draw-vertical { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes note-enter { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes detail-enter { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes button-sheen { to { transform: translateX(150%); } }
