@@ -76,3 +76,44 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
     observer.observe(element);
   });
 }
+
+// Update a decorative progress line without interfering with page interaction.
+const progressBar = document.querySelector('.reading-progress span');
+let progressPending = false;
+function updateProgress() {
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+  if (progressBar) progressBar.style.transform = `scaleX(${progress})`;
+  progressPending = false;
+}
+function requestProgressUpdate() {
+  if (!progressPending) { progressPending = true; requestAnimationFrame(updateProgress); }
+}
+window.addEventListener('scroll', requestProgressUpdate, { passive: true });
+window.addEventListener('resize', requestProgressUpdate, { passive: true });
+requestProgressUpdate();
+
+// Count up only when the statistics enter view; the original values remain available
+// without JavaScript and to screen readers via the surrounding labels.
+const statsToAnimate = document.querySelectorAll('.stat-value[data-count]');
+if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const numberFormatter = new Intl.NumberFormat('en-IN');
+  const counterObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const element = entry.target;
+      const target = Number(element.dataset.count);
+      const start = performance.now();
+      const duration = 1100;
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        element.textContent = numberFormatter.format(Math.round(target * eased));
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      observer.unobserve(element);
+    });
+  }, { threshold: 0.5 });
+  statsToAnimate.forEach(element => counterObserver.observe(element));
+}

@@ -33,3 +33,33 @@
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Scroll and interaction details */
+.stat strong .stat-value { font: inherit; color: inherit; }
+.reading-progress { position: fixed; inset: 0 0 auto; height: 3px; pointer-events: none; z-index: 100; }
+.reading-progress span { display: block; height: 100%; width: 100%; transform: scaleX(0); transform-origin: left; background: #d6a646; }
+@media (prefers-reduced-motion: no-preference) {
+  .reading-progress span { transition: transform .12s linear; }
+  .nav-wrap nav a { position: relative; }
+  .nav-wrap nav a::after { content: ''; position: absolute; left: 0; right: 0; bottom: -8px; height: 2px; background: #c49a50; transform: scaleX(0); transform-origin: left; transition: transform .25s ease; }
+  .nav-wrap nav a:hover::after, .nav-wrap nav a[aria-current="page"]::after { transform: scaleX(1); }
+  .hero-bottom span:last-child { animation: scroll-hint 1.8s ease-in-out infinite; }
+  .hero-note .note-icon, .future-bottom span:last-child { animation: gentle-turn 12s linear infinite; }
+  .intro-aside .seal { transition: transform .55s cubic-bezier(.2,.7,.2,1), border-color .3s ease; }
+  .intro-aside:hover .seal { transform: rotate(-8deg) scale(1.05); border-color: #a97d39; }
+  .story-grid a img { transition: transform .55s cubic-bezier(.2,.7,.2,1), filter .55s ease; }
+  .story-grid a:hover img { transform: scale(1.06); filter: saturate(1.08); }
+  .card-icon, .mini-card .icon { display: inline-block; transition: transform .35s ease; }
+  .card:hover .card-icon, .mini-card:hover .icon { transform: rotate(14deg) scale(1.1); }
+  .cards .card:nth-child(2), .course-grid .course-card:nth-child(3n + 2) { animation-delay: 55ms; }
+  .cards .card:nth-child(3), .course-grid .course-card:nth-child(3n) { animation-delay: 110ms; }
+  .programme-tabs button::after { transition: transform .25s ease; transform: scaleX(0); transform-origin: left; }
+  .programme-tabs button.active::after { transform: scaleX(1); }
+  .menu-toggle span { transition: transform .25s ease; }
+  .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(4px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-4px) rotate(-45deg); }
+  @media (max-width: 900px) { nav.open { animation: menu-in .25s ease-out both; transform-origin: top; } }
+}
+@keyframes scroll-hint { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+@keyframes gentle-turn { to { transform: rotate(360deg); } }
+@keyframes menu-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
