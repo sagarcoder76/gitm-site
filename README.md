@@ -12,7 +12,7 @@ Admissions enquiries open a prefilled email draft in the visitor's mail applicat
 
 ## Photography and content
 
-The design uses photographs identified as GITM campus, student and event photography from the following third-party galleries, rather than AI-generated or stock campus photography:
+The design uses photographs identified as GITM campus, student and event photography from the following third-party galleries, rather than AI-generated or stock campus photography. Locally hosted originals are retained in `assets/`; the site uses 2× upscaled, lightly sharpened WebP versions in `assets/enhanced/`. Upscaling does not recover missing detail from the originals: approved, native high-resolution photographs are preferred:
 
 - `students-campus.jpg`, `workshop.png`, `student-event.png`, `students-on-campus.png`: [Collegedunia GITM gallery](https://collegedunia.com/college/17693-global-institute-of-technology-and-management-gitm-gurgaon/gallery)
 - `campus-building.webp`, `learning.webp`: [CollegeBatch GITM campus tour](https://www.collegebatch.com/4241-global-institute-of-technology-and-management-campus-tour-gurgaon)
