@@ -26,3 +26,7 @@ Additional gallery images are embedded directly from the existing GITM site (not
 The recruiter wall is based on names in GITM's [leading recruiters](https://gitmgurgaon.com/our-leading-recruiters/) and [placement cell](https://gitmgurgaon.com/placement-cell/) material. Names are institute-reported and do not establish current participation, visit dates, or guaranteed placement. Confirm with the placement office before official publication.
 
 Recruiter brand marks in `assets/recruiters/` are from [Simple Icons](https://simpleicons.org/) (CC0 1.0) and [Font Awesome Free](https://fontawesome.com/) (Amazon icon, CC BY 4.0; © Fonticons, Inc.) and a four-colour Microsoft mark. Brand names and logos remain trademarks of their respective owners. Confirm permitted use before an official launch; marks do not imply endorsement or a current placement partnership.
+
+## Fonts
+
+Manrope and DM Serif Display are self-hosted from [Fontsource](https://fontsource.org/) for reliable rendering without an external font request. Both are licensed under the SIL Open Font License 1.1; their licence texts are in `assets/fonts/`.
