@@ -136,3 +136,32 @@
 @keyframes editorial-rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes halo-arrive { from { opacity: 0; transform: scale(.65); } to { opacity: 1; transform: scale(1); } }
 @keyframes ink-shift { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+
+/* Campus photo slideshow: uses the existing college photos, never stock imagery. */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.hero-slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; }
+.hero-slide[data-slide="0"] { background-image: url('assets/students-campus.jpg'); }
+.hero-slide[data-slide="1"] { background-image: url('assets/campus-building.webp'); }
+.hero-slide[data-slide="2"] { background-image: url('assets/learning.webp'); }
+.hero-slide[data-slide="3"] { background-image: url('assets/students-on-campus.png'); }
+.hero-slide.is-active { opacity: 1; }
+.hero-controls[hidden] { display: none; }
+.hero-controls { position: absolute; left: 31%; bottom: 22px; z-index: 2; display: flex; align-items: center; gap: 8px; color: white; }
+.hero-slide-info { display: flex; flex-direction: column; gap: 5px; margin-right: 12px; min-width: 145px; }
+.hero-slide-number { font-size: 11px; font-weight: 700; letter-spacing: .08em; }
+.hero-slide-number i { font-style: normal; color: #cfaa6c; margin: 0 5px; }
+.hero-slide-title { font-size: 8px; font-weight: 700; letter-spacing: .13em; color: #e6eadf; }
+.hero-controls button { display: grid; place-items: center; background: rgba(15,39,36,.35); border: 1px solid rgba(255,255,255,.48); color: white; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 15px; }
+.hero-controls button:hover, .hero-controls button:focus-visible { background: #d9ae60; border-color: #d9ae60; color: #142c38; }
+.hero-controls .hero-play { font-size: 10px; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-slide { transition: opacity 1.25s ease, transform 7s ease; transform: scale(1.04); }
+  .hero-slide.is-active { transform: scale(1); }
+  .hero-controls { animation: editorial-rise .8s .65s both; }
+  .hero-controls button { transition: color .25s ease, background .25s ease, border-color .25s ease, transform .25s ease; }
+  .hero-controls button:hover { transform: translateY(-3px); }
+  .hero-slide-title { animation: slide-label .5s ease both; }
+}
+@keyframes slide-label { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 900px) { .hero-controls { left: 7%; bottom: 82px; } }
+@media (max-width: 430px) { .hero-slide-info { min-width: 132px; margin-right: 4px; } .hero-controls button { width: 34px; height: 34px; } }
