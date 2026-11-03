@@ -259,3 +259,8 @@
   .recruiter-tile, .page-body .recruiter-tile { min-height: 135px; }
 }
 @media (prefers-reduced-motion: reduce) { .recruiter-cta { transition: none; } }
+
+/* Give recruiter marks their brand colours, with a clean backing for contrast. */
+.recruiter-mark { background: #fbfaf5; color: var(--mark-color, #285b4b); border: 1px solid rgba(41, 73, 56, .1); }
+.recruiter-mark img { width: 28px; height: 28px; }
+.recruiter-monogram { color: var(--mark-color, #285b4b); }

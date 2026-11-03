@@ -10,8 +10,10 @@ function recruiterGrid(limit = recruiterNames.length) {
   const cards = recruiterNames.slice(0, limit).map((name, i) => {
     const icon = recruiterMarks[name];
     const initials = name.split(/\s+/).map(word => word[0]).slice(0, 2).join('').toUpperCase();
+    const monogramColours = ['#176b8b', '#b34c32', '#38705b', '#774b8d', '#aa602b'];
+    const colour = ({ 'Capgemini': '#0070ad', 'Tech Mahindra': '#d52035' })[name] || monogramColours[i % monogramColours.length];
     const mark = icon ? `<img src="assets/recruiters/${icon}.svg" alt="" loading="lazy">` : `<span class="recruiter-monogram">${initials}</span>`;
-    return `<div class="recruiter-tile"><div class="recruiter-brand"><span class="recruiter-mark" aria-hidden="true">${mark}</span><strong>${name}</strong></div><span class="recruiter-index"><span>GLOBAL / ${String(i + 1).padStart(2, '0')}</span><span>RECRUITER</span></span></div>`;
+    return `<div class="recruiter-tile"><div class="recruiter-brand"><span class="recruiter-mark" style="--mark-color: ${colour}" aria-hidden="true">${mark}</span><strong>${name}</strong></div><span class="recruiter-index"><span>GLOBAL / ${String(i + 1).padStart(2, '0')}</span><span>RECRUITER</span></span></div>`;
   }).join('');
   return `<div class="recruiter-wall">${cards}</div><p class="recruiter-credit">Brand icons: <a href="https://simpleicons.org/" target="_blank" rel="noopener noreferrer">Simple Icons</a> and <a href="https://fontawesome.com/" target="_blank" rel="noopener noreferrer">Font Awesome</a>.</p>`;
 }
