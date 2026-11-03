@@ -268,3 +268,13 @@ document.addEventListener('keydown', event => {
     menu.focus();
   }
 });
+
+// The official logo contains the full wordmark. If its remote source is
+// unavailable, keep a readable text alternative in the header instead.
+const instituteLogo = document.querySelector('.brand-logo');
+const logoFallback = document.querySelector('.brand-copy');
+if (instituteLogo && logoFallback) {
+  function showLogoFallback() { instituteLogo.hidden = true; logoFallback.hidden = false; }
+  instituteLogo.addEventListener('error', showLogoFallback, { once: true });
+  if (instituteLogo.complete && !instituteLogo.naturalWidth) showLogoFallback();
+}
