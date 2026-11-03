@@ -1,7 +1,19 @@
 // The institute lists these organisations as recruiters, without a confirmed visit year for each.
 const recruiterNames = ['TCS', 'Infosys', 'Wipro', 'HCL Technologies', 'Capgemini', 'Tech Mahindra', 'ICICI Bank', 'Microsoft', 'Amazon', 'Google', 'Accenture', 'IBM', 'Cognizant', 'Flipkart', 'Genpact', 'HDFC Bank', 'JBM Industries', 'Airtel', 'Samsung', 'Sony', 'Hitachi', 'Panasonic', 'Bank of America', 'Aditya Birla Group', 'Paytm', 'Naukri.com', 'Nestlé', 'Eicher', 'Sunbeam', 'Schwing'];
+const recruiterMarks = {
+  'TCS': 'tcs', 'Infosys': 'infosys', 'Wipro': 'wipro', 'HCL Technologies': 'hcl',
+  'ICICI Bank': 'icicibank', 'Microsoft': 'microsoft', 'Amazon': 'amazon', 'Google': 'google',
+  'Accenture': 'accenture', 'HDFC Bank': 'hdfcbank', 'Airtel': 'airtel', 'Samsung': 'samsung',
+  'Sony': 'sony', 'Hitachi': 'hitachi', 'Panasonic': 'panasonic', 'Paytm': 'paytm'
+};
 function recruiterGrid(limit = recruiterNames.length) {
-  return `<div class="recruiter-wall">${recruiterNames.slice(0, limit).map((name, i) => `<div class="recruiter-tile"><span class="recruiter-index">${String(i + 1).padStart(2, '0')} / RECRUITER</span><strong>${name}</strong><span class="recruiter-arrow" aria-hidden="true">↗</span></div>`).join('')}</div>`;
+  const cards = recruiterNames.slice(0, limit).map((name, i) => {
+    const icon = recruiterMarks[name];
+    const initials = name.split(/\s+/).map(word => word[0]).slice(0, 2).join('').toUpperCase();
+    const mark = icon ? `<img src="assets/recruiters/${icon}.svg" alt="" loading="lazy">` : `<span class="recruiter-monogram">${initials}</span>`;
+    return `<div class="recruiter-tile"><div class="recruiter-brand"><span class="recruiter-mark" aria-hidden="true">${mark}</span><strong>${name}</strong></div><span class="recruiter-index"><span>GLOBAL / ${String(i + 1).padStart(2, '0')}</span><span>RECRUITER</span></span></div>`;
+  }).join('');
+  return `<div class="recruiter-wall">${cards}</div><p class="recruiter-credit">Brand icons: <a href="https://simpleicons.org/" target="_blank" rel="noopener noreferrer">Simple Icons</a> and <a href="https://fontawesome.com/" target="_blank" rel="noopener noreferrer">Font Awesome</a>.</p>`;
 }
 // Images are embedded from the institute's own published galleries. We do not
 // assume reuse rights: the owner should confirm permission before official launch.
