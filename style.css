@@ -97,3 +97,42 @@
 @keyframes note-enter { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes detail-enter { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes button-sheen { to { transform: translateX(150%); } }
+
+/* A coordinated motion system for page entrances, depth and interactions. */
+@media (prefers-reduced-motion: no-preference) {
+  main { transition: opacity .22s ease, transform .22s ease, filter .22s ease; }
+  body.is-leaving main { opacity: 0; transform: translateY(10px); filter: blur(3px); pointer-events: none; }
+  .hero-content h1, .page-hero h1 { animation: headline-reveal 1.05s cubic-bezier(.16,1,.3,1) .08s both; }
+  .hero-content > p, .page-hero p { animation: editorial-rise .8s cubic-bezier(.22,1,.36,1) .28s both; }
+  .hero-actions { animation: editorial-rise .8s cubic-bezier(.22,1,.36,1) .42s both; }
+  .hero-shade::after { content: ''; position: absolute; width: 380px; height: 380px; right: 6%; top: 12%; border: 1px solid rgba(244,225,177,.18); border-radius: 50%; box-shadow: 0 0 0 55px rgba(244,225,177,.025), 0 0 0 110px rgba(244,225,177,.02); pointer-events: none; animation: halo-arrive 1.8s cubic-bezier(.16,1,.3,1) both; }
+  .page-hero::before { content: ''; position: absolute; right: -60px; top: -210px; width: 540px; height: 540px; border: 1px solid rgba(216,177,104,.18); border-radius: 50%; box-shadow: 0 0 0 70px rgba(216,177,104,.035), 0 0 0 140px rgba(216,177,104,.025); pointer-events: none; animation: halo-arrive 1.6s cubic-bezier(.16,1,.3,1) both; }
+  .page-hero .crumb, .page-hero .eyebrow, .page-hero h1, .page-hero p { position: relative; z-index: 1; }
+  .section-heading h2 em, .page-section h2 em, .intro h2 em, .campus h2 em { background: linear-gradient(100deg, #a97d39 0%, #d1ad6d 45%, #a97d39 85%); background-size: 200% auto; background-clip: text; -webkit-background-clip: text; color: transparent; animation: ink-shift 8s ease-in-out infinite alternate; }
+  .btn, .nav-apply { position: relative; isolation: isolate; overflow: hidden; }
+  .btn::after, .nav-apply::after { content: ''; position: absolute; inset: 0; z-index: -1; background: rgba(255,255,255,.16); transform: translateX(-105%); transition: transform .45s cubic-bezier(.22,1,.36,1); }
+  .btn:hover::after, .nav-apply:hover::after { transform: translateX(0); }
+  .course-tools button:active, .programme-tabs button:active, .menu-toggle:active { transform: scale(.96); }
+  .photo-grid img, .split > img { box-shadow: 0 18px 45px rgba(20,44,40,.08); }
+  .step { position: relative; }
+  .step::before { content: ''; position: absolute; top: -1px; left: 0; width: 28%; height: 2px; background: #c69b51; transform-origin: left; transform: scaleX(.3); transition: transform .5s ease; }
+  .step:hover::before { transform: scaleX(1); }
+  .quick-links a, .recruiters span { transition: transform .25s ease, color .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease; }
+  .quick-links a:hover { transform: translateY(-3px); }
+  @media (min-width: 901px) {
+    .hero-bg { inset: -45px 0; translate: 0 var(--hero-shift, 0px); will-change: translate; }
+  }
+  @media (max-width: 600px) {
+    .hero-shade::after { width: 220px; height: 220px; right: -90px; top: 18%; }
+    .page-hero::before { width: 330px; height: 330px; right: -210px; top: -90px; }
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .card, .course-card, .mini-card, .contact-card, .eligibility-list > div { position: relative; isolation: isolate; }
+  .card::before, .course-card::before, .mini-card::before, .contact-card::before, .eligibility-list > div::before { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0; background: radial-gradient(220px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(207,167,91,.17), transparent 70%); transition: opacity .3s ease; }
+  .card:hover::before, .course-card:hover::before, .mini-card:hover::before, .contact-card:hover::before, .eligibility-list > div:hover::before { opacity: 1; }
+}
+@keyframes headline-reveal { from { opacity: 0; transform: translateY(36px); clip-path: inset(0 0 100% 0); } to { opacity: 1; transform: translateY(0); clip-path: inset(0 0 0 0); } }
+@keyframes editorial-rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes halo-arrive { from { opacity: 0; transform: scale(.65); } to { opacity: 1; transform: scale(1); } }
+@keyframes ink-shift { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }

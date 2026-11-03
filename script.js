@@ -62,11 +62,18 @@ if (page && location.hash && page !== 'academics') {
 
 // Update a decorative progress line without interfering with page interaction.
 const progressBar = document.querySelector('.reading-progress span');
+const heroScene = document.querySelector('.hero');
+const parallaxMotion = window.matchMedia('(prefers-reduced-motion: no-preference)');
+const parallaxScreen = window.matchMedia('(min-width: 901px)');
 let progressPending = false;
 function updateProgress() {
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
   const progress = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
   if (progressBar) progressBar.style.transform = `scaleX(${progress})`;
+  if (heroScene) {
+    const shift = parallaxMotion.matches && parallaxScreen.matches ? Math.min(window.scrollY * 0.12, 38) : 0;
+    heroScene.style.setProperty('--hero-shift', `${shift}px`);
+  }
   progressPending = false;
 }
 function requestProgressUpdate() {
@@ -159,3 +166,37 @@ if (typeof motionPreference.addEventListener === 'function') {
     }
   });
 }
+
+// Give in-site navigation a short exit transition without intercepting external
+// links, anchors on the same page, downloads, or modified clicks.
+let navigating = false;
+document.addEventListener('click', event => {
+  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || motionPreference.matches) return;
+  const link = event.target.closest('a[href]');
+  if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
+  const destination = new URL(link.href, location.href);
+  if (destination.origin !== location.origin || !['http:', 'https:'].includes(destination.protocol)) return;
+  if (destination.pathname === location.pathname && destination.search === location.search) return;
+  if (navigating) { event.preventDefault(); return; }
+  event.preventDefault();
+  navigating = true;
+  document.body.classList.add('is-leaving');
+  window.setTimeout(() => location.assign(destination.href), 220);
+});
+window.addEventListener('pageshow', () => {
+  navigating = false;
+  document.body.classList.remove('is-leaving');
+});
+
+// A pointer-following highlight adds depth to cards on devices with a fine
+// pointer. Event delegation also covers cards added by programme filters.
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+const interactiveCards = '.card, .course-card, .mini-card, .contact-card, .eligibility-list > div';
+document.addEventListener('pointermove', event => {
+  if (!finePointer.matches || motionPreference.matches) return;
+  const card = event.target.closest(interactiveCards);
+  if (!card) return;
+  const bounds = card.getBoundingClientRect();
+  card.style.setProperty('--spot-x', `${event.clientX - bounds.left}px`);
+  card.style.setProperty('--spot-y', `${event.clientY - bounds.top}px`);
+}, { passive: true });
